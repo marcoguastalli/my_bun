@@ -8,3 +8,4 @@ bun init
 
 ### run
 bun run get_ip.ts
+bun run post_hello_world.ts
