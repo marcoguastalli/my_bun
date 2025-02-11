@@ -8,6 +8,22 @@
 <body>
 <h1>My IP Address:</h1>
 <div id="ip-display">Loading...</div>
-<script src="loadjs.js" async></script>
+<script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadScriptConditionally = (src, loadAsync = true) => {
+            const script = document.createElement('script');
+            script.src = src;
+            if (loadAsync) {
+                script.async = true;
+            } else {
+                script.defer = true;
+            }
+            document.body.appendChild(script);
+        };
+        // load the script with async
+        loadScriptConditionally('loadjs.js', true);
+    });
+</script>
 </body>
 </html>
