@@ -1,11 +1,15 @@
 # http fetch
 
 ### inspiring links
-https://bun.sh/guides/http/fetch
+- https://bun.sh/
+- https://bun.sh/guides/http/fetch
 
-### init
-bun init
+### 1st time setup
+- `cd ~/dev/repository/gitjs/my_bun/http_fetch`
+- `bun init`
 
 ### run
-bun run get_ip.ts
-bun run post_hello_world.ts
+- `cd ~/dev/repository/gitjs/my_bun/http_fetch`
+- `pnpm i`
+- `bun run get_ip.ts`
+- `bun run post_hello_world.ts`
