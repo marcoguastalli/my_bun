@@ -21,6 +21,8 @@
             }
             document.body.appendChild(script);
         };
+        // load the script with defer
+        loadScriptConditionally('loadjs_defer.js', true);
         // load the script with async
         loadScriptConditionally('loadjs.js', true);
     });
