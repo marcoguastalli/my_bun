@@ -14,8 +14,7 @@ function generateCodeVerifier(): string {
 function generateCodeChallenge(codeVerifier: string): string {
   const sha256 = crypto.createHash('sha256');
   sha256.update(codeVerifier);
-  const hash = sha256.digest('base64url');
-  return hash;
+  return sha256.digest('base64url');
 }
 
 interface OAuthResponse {
@@ -51,6 +50,7 @@ export async function getOAuthToken(
   nonce: string
 ): Promise<OAuthResponse> {
   try {
+    console.log('Call:', authorizationUrl);
     const response = await fetch(authorizationUrl, {
       method: 'POST',
       headers: {
@@ -67,9 +67,11 @@ export async function getOAuthToken(
         code_challenge: codeChallenge,
         state: state,
         nonce: nonce,
+        codeVerifier: codeVerifier,
       }).toString(),
     });
 
+    console.log('response:', response);
     if (!response.ok) {
       throw new Error('Failed to retrieve token');
     }

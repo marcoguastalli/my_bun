@@ -1,15 +1,13 @@
 # oauth2
 
-To install dependencies:
+### inspiring links
+- https://oauthdebugger.com/
 
-```bash
-bun install
-```
+### 1st time setup
+- `cd ~/dev/repository/gitjs/my_bun/oauth2`
+- `bun init`
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.45. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+### run
+- `cd ~/dev/repository/gitjs/my_bun/oauth2`
+- `pnpm i`
+- `bun run authorize.ts`
