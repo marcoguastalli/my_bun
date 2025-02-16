@@ -1,7 +1,6 @@
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
 
-// Initialize tRPC
 const t = initTRPC.create();
 
 // Define a simple router for the RPC API
@@ -32,7 +31,7 @@ async function handleTRPCRequest(req: Request) {
                 const result = await caller.getUser(input); // Calling the procedure correctly
                 return new Response(JSON.stringify(result), {
                     status: 200,
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
                 });
             }
         }
@@ -46,7 +45,7 @@ async function handleTRPCRequest(req: Request) {
                 const result = await caller.createUser(body); // Calling the procedure correctly
                 return new Response(JSON.stringify(result), {
                     status: 200,
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
                 });
             }
         }
@@ -54,14 +53,14 @@ async function handleTRPCRequest(req: Request) {
         // If no matching path, return 404
         return new Response(JSON.stringify({ error: 'Not Found' }), {
             status: 404,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
         });
 
     } catch (error) {
         // Return error response in JSON format
         return new Response(JSON.stringify({ error: error.message }), {
             status: 500,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
         });
     }
 }
