@@ -6,33 +6,30 @@ const t = initTRPC.create();
 
 // Define a simple router for the RPC API
 const appRouter = t.router({
-    getUser: t.procedure.input(z.string()).query((opts) => {
-        return { id: opts.input, name: 'John Doe' };  // Simulated user lookup
+    getUser: t.procedure.input(z.string()).query(async (opts) => {
+        // Simulated user lookup
+        return { id: opts.input, name: 'John Doe' };
     }),
     createUser: t.procedure
         .input(z.object({ name: z.string().min(5), email: z.string().email() }))
-        .mutation((opts) => {
+        .mutation(async (opts) => {
+            // Simulate user creation
             return { message: `User ${opts.input.name} created successfully!` };
         }),
 });
 
-// Function to handle tRPC requests
+// Create a function to handle the request and call tRPC procedures
 async function handleTRPCRequest(req: Request) {
     const url = new URL(req.url);
 
     try {
-        // Check if the request is for the getUser procedure
+        // Check for 'getUser' query
         if (url.pathname === '/trpc/getUser') {
             const input = new URLSearchParams(url.search).get('input');
             if (input) {
-                // Call the tRPC procedure and return the result
-                const result = await appRouter.getUser({
-                    input,
-                    ctx: undefined,
-                    rawInput: input,
-                    path: '',
-                    type: 'query'
-                });
+                // Call the tRPC procedure using the `createCaller` method
+                const caller = appRouter.createCaller({});
+                const result = await caller.getUser(input); // Calling the procedure correctly
                 return new Response(JSON.stringify(result), {
                     status: 200,
                     headers: { 'Content-Type': 'application/json' },
@@ -40,12 +37,13 @@ async function handleTRPCRequest(req: Request) {
             }
         }
 
-        // Check if the request is for the createUser procedure
-        if (url.pathname === '/trpc/createUser') {
+        // Check for 'createUser' mutation (ensure POST request)
+        if (url.pathname === '/trpc/createUser' && req.method === 'POST') {
             const body = await req.json();
             if (body) {
-                // Call the tRPC procedure and return the result
-                const result = await appRouter.createUser(body);
+                // Call the tRPC procedure using the `createCaller` method
+                const caller = appRouter.createCaller({});
+                const result = await caller.createUser(body); // Calling the procedure correctly
                 return new Response(JSON.stringify(result), {
                     status: 200,
                     headers: { 'Content-Type': 'application/json' },
